@@ -1,11 +1,11 @@
+import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
- 
+import java.sql.Statement;
+
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
-import java.sql.Connection;
  
  
 public class PortForwardingL {
@@ -18,15 +18,15 @@ public class PortForwardingL {
     public static void main(String[] args) throws SQLException {
  
         int lport=5656;
-        String rhost="secure.journaldev.com";
-        String host="secure.journaldev.com";
-        int rport=3306;
-        String user="sshuser";
-        String password="sshpassword";
-        String dbuserName = "mysql";
-        String dbpassword = "mysql123";
-        String url = "jdbc:mysql://localhost:"+lport+"/mydb";
-        String driverName="com.mysql.jdbc.Driver";
+        String rhost="faure.cs.colostate.edu";
+        String host="faure.cs.colostate.edu";
+        int rport=5432;
+        String user="gazawayj";
+        String password="?1meanpassword";
+        String dbuserName = "gazawayj";
+        String dbpassword = "829326478";
+        String url = "jdbc:postgresql://localhost:"+lport+"/gazawayj";
+        String driverName="org.postgresql.Driver";
         Connection conn = null;
         Session session= null;
         try{
@@ -47,8 +47,16 @@ public class PortForwardingL {
             Class.forName(driverName).newInstance();
             conn = DriverManager.getConnection (url, dbuserName, dbpassword);
             System.out.println ("Database connection established");
+            try {
+				Statement stmt = conn.createStatement();
+				int resultSet = stmt.executeUpdate("INSERT INTO test values('199', 'Tim');");
+				System.out.println("INSERTED TO TABLE");
+			} catch (SQLException e) {
+				System.out.println(e);
+			}
             System.out.println("DONE");
         }catch(Exception e){
+            System.out.println(e);
             e.printStackTrace();
         }finally{
             if(conn != null && !conn.isClosed()){
