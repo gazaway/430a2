@@ -1,6 +1,5 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -10,11 +9,6 @@ import com.jcraft.jsch.Session;
  
 public class PortForwardingL {
  
-    /**
-     * Java Program to connect to remote database through SSH using port forwarding
-     * @author Pankaj@JournalDev
-     * @throws SQLException 
-     */
     public static void main(String[] args) throws SQLException {
  
         int lport=5656;
