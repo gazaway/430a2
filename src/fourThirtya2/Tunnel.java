@@ -1,3 +1,5 @@
+package fourThirtya2;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -7,8 +9,8 @@ import com.jcraft.jsch.Session;
  
 public class Tunnel {
 	
-	private Connection conn = null;
-	private Session session = null;
+	private static Connection conn = null;
+	private static Session session = null;
 	
 	/*
 	 * Creates an SSH session as well as port forwarding.
@@ -36,17 +38,20 @@ public class Tunnel {
             Class.forName("org.postgresql.Driver").newInstance();
             conn = DriverManager.getConnection (url, user, dbpassword);
         }catch(Exception e){
-            e.printStackTrace();
+            System.out.println(e);
         }
-        System.out.println("--> Connection Open");
         return conn;
 	}
 	
 	/*
 	 * Closes the SSH session and JDBC connection.
 	 */
-	public void close() throws SQLException{
-		conn.close();
+	public static void close(){
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			System.out.println(e);
+		}
 		session.disconnect();
 		System.out.println("--> Connection Closed");
 	}
