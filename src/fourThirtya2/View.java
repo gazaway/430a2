@@ -40,6 +40,7 @@ public class View {
 		boolean run = true;
 		Scanner kbd = null;
 		while (run) {
+			System.out.println("_________________________________________________");
 			System.out.println("What would you like to do?");
 			System.out.println("1. Add a student to the database.");
 			System.out.println("2. Add a book to the databse.");
@@ -108,26 +109,33 @@ public class View {
 		ResultSet rs = null;
 		try {
 			rs = Backend.getAllTables();
-			System.out.println("_________________________________________________");
-			System.out.println("Here is a list of all available tables.");
-			System.out.println("Type the corresponding number to print the table.");
-			while (rs.next()){
-				System.out.println(cntr + ". " + rs.getString("TABLE_NAME"));
-				cntr++;
+			int size = 0;
+			if (rs != null) {
+				rs.beforeFirst();
+				rs.last();
+				size = rs.getRow();
+				rs.beforeFirst();
+				System.out.println("_________________________________________________");
+				System.out.println("Here is a list of all available tables.");
+				System.out.println("Type the corresponding number to print the table.");
+				String[] tables = new String[size];
+				while (rs.next()) {
+					String temp = rs.getString("TABLE_NAME");
+					System.out.println(cntr + ". " + temp);
+					tables[cntr] = temp;
+					cntr++;
+				}
+				Scanner kbd = new Scanner(System.in);
+				int select = kbd.nextInt();
+				String tableName = tables[select];
+				rs = Backend.getTable(tableName);
+				while (rs.next()) {
+					System.out.println(rs.getString("test_id") + "\t,\t"
+							+ rs.getString("test_name"));
+				}
 			}
-			Scanner kbd = new Scanner(System.in);
-			int select = kbd.nextInt();
-			cntr = 0;
-			while (cntr < select){
-				rs.next();
-				cntr++;
-			}
-			String tableName = rs.getString("TABLE_NAME");
-			rs = Backend.getTable(tableName);
-			while (rs.next()){
-				System.out.println(rs);//.getString("test_id") + "   ,     " + rs.getString("test_name"));
-			}
-		} catch (Exception e) {	}
-		//TODO finish this. Figure out why the tables aren't printing.
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 }
