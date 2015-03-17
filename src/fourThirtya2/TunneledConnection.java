@@ -3,14 +3,15 @@ package fourThirtya2;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
  
  
-public class Tunnel {
+public class TunneledConnection {
 	
-	private static Connection conn = null;
-	private static Session session = null;
+	private static Connection conn;
+	private static Session session;
 	
 	/*
 	 * Creates an SSH session as well as port forwarding.
@@ -44,7 +45,7 @@ public class Tunnel {
 	}
 	
 	/*
-	 * Closes the SSH session and JDBC connection.
+	 * Closes the SSH session and JDBC.
 	 */
 	public static void close(){
 		try {

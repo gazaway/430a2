@@ -1,6 +1,10 @@
 package fourThirtya2;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Backend {
 
@@ -11,21 +15,29 @@ public class Backend {
 	 * connection, and creates the UI for the database modifications.
 	 */
 	public static void main(String[] args) throws SQLException {
-		Tunnel tunnel = new Tunnel();
+		TunneledConnection tunnel = new TunneledConnection();
 		conn = tunnel.createTunnel();
 		if (conn != null) {
 			System.out.println("--> Connection Open");
-			View view = new View(conn);
+			ModelView view = new ModelView();
 			view.run();
 		}
 	}
 	
+	/*
+	 * I designed this to grab ONLY the table names of the tables on the
+	 * database. There should be minimal connection waste since I'm just
+	 * pulling metadata. Returns a ResultSet of table names.
+	 */
 	static ResultSet getAllTables() throws SQLException{
 		DatabaseMetaData meta = conn.getMetaData();
 		ResultSet temp = meta.getTables(null, null, null, new String[]{"TABLE"});
 		return temp;
 	}
 	
+	/*
+	 * This pulls the actual table, returning a ResultSet of the table data.
+	 */
 	static ResultSet getTable(String name){
 		Statement stmt;
 		ResultSet rs = null;

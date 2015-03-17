@@ -1,22 +1,13 @@
 package fourThirtya2;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.Scanner;
 
-public class View {
+public class ModelView {
 	
-	private Connection conn;
-	
-	public View(Connection _conn){
-		conn = _conn;
-	}
-	
-
 	/*
-	 * This is just a simple method that clears the terminal no matter
-	 * which OS the user is on. Simple Quality of Life improvement
+	 * This is just a method that clears the terminal ALMOST no matter
+	 * which OS the user is on. Simple quality of life improvement
 	 */
 	public void clearConsole(){
 	    try {
@@ -71,9 +62,10 @@ public class View {
 				printTable();
 				clearConsole();
 				break;
-			case 0: run = false;
+			case 0: // QUIT 
+				run = false;
 				clearConsole();
-				Tunnel.close();
+				TunneledConnection.close();
 				break;
 			default:
 				System.out.println("Unrecognized input of " + select + " detected.");
@@ -104,6 +96,10 @@ public class View {
 		
 	}
 	
+	/*
+	 * Option 6. Gives the user the choice of which table to print
+	 * then prints it based off of that selection.
+	 */
 	public void printTable(){
 		int cntr = 0;
 		ResultSet rs = null;
