@@ -1,0 +1,13 @@
+Three tables constitutes this database with the relations, {(sID -> FN, LN, Degree), 
+(ISNB-> name, year, numCopies), (sID, bookIssued -> issueDate, dueDate}
+
+Everything is able to be done through the text-based user interface. To run the
+application, simply invoke the backend class. This is my driver class which my 
+ModelView class utilizes in order to complete its tasks.
+
+I created this application with an SSH tunnel and port forwarding so that updates
+can be done no matter what network the user is on.
+
+The usernames and passwords are easily visible in the source code so I won't post
+that redundant (AND SENSITIVE) info here.
+
